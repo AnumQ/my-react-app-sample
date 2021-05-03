@@ -5,6 +5,7 @@ import { Button } from "@material-ui/core";
 import { ButtonContainerNoShadowBox } from "./UI/ButtonsNoShadowbox";
 import moment, { Moment } from "moment";
 import { format } from "./Utils/formatter";
+import { log } from "../../consoleHelper";
 
 const M = 0;
 const T = 1;
@@ -44,14 +45,8 @@ const DayItem = ({
   );
 };
 
-export const WeekView = ({
-  date,
-  handleSetDate,
-}: {
-  date: Moment;
-  handleSetDate: (data: any) => void;
-}) => {
-  const weekOfDay = date.isoWeekday();
+export const WeekView = ({ date, setDate }: { date: Date; setDate: any }) => {
+  const weekOfDay = moment(date).isoWeekday();
 
   const [currentDay, setCurrentDay] = useState(weekOfDay - 1);
 
@@ -76,27 +71,17 @@ export const WeekView = ({
               console.log("currentDay: " + currentDay);
               console.log("index: " + index);
               console.log("day: " + day.day);
+              log(date);
+
+              log("next date");
+
               setCurrentDay(day.day);
 
               if (currentDay !== day.day) {
-                // set new date here
-
-                if (index > currentDay) {
-                  // add to day
-                  const nextDate = date.add(index, "day");
-                  console.log("nextDate");
-                  handleSetDate(nextDate);
-                }
-
-                if (index < currentDay) {
-                  const backDays = currentDay - index;
-                  console.log(backDays);
-                  const nextDate = date.subtract(1, "day");
-                  console.log("back date");
-                  console.log(format(nextDate));
-
-                  handleSetDate(nextDate);
-                }
+                const daysToChange = index - currentDay;
+                // log("days to add " + daysToAdd);
+                const nextDate = addDays(date, daysToChange);
+                setDate(nextDate);
               }
             }}
           />
@@ -110,3 +95,9 @@ export const WeekView = ({
     </>
   );
 };
+
+function addDays(currentDate: Date, days: number) {
+  const date = new Date(currentDate);
+  date.setDate(date.getDate() + days);
+  return date;
+}

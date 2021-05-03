@@ -6,6 +6,7 @@ import { TitleCalendarRow } from "./TitleCalendarRow";
 import { WeekView } from "./WeekView";
 import moment from "moment";
 import { format } from "./Utils/formatter";
+import { log } from "../../consoleHelper";
 
 export const Container = styled.div`
   display: "flex";
@@ -18,18 +19,13 @@ export const MONTH = 0;
 export const DAY = 1;
 
 export const Timesheet = () => {
-  // switch betwen month or day
-
-  const d = moment();
-  const [date, setDate] = useState(d);
-
-  const [title, setTitle] = useState(format(date));
-
   const [state, setState] = useState(DAY);
+  const [date, setDate] = useState(moment().toDate());
 
   useEffect(() => {
     console.log("CURREENT DAY CHANGED");
-    console.log(format(date));
+
+    log(date);
   }, [date]);
 
   return (
@@ -43,18 +39,12 @@ export const Timesheet = () => {
           margin: "0 auto",
         }}
       >
-        <TitleCalendarRow state={state} setState={setState} title={title} />
-        {state === DAY ? (
-          <WeekView
-            date={date}
-            handleSetDate={(data) => {
-              console.log("Handle set date");
-              console.log(format(data));
-              setDate(data);
-              setTitle(format(data));
-            }}
-          />
-        ) : null}
+        <TitleCalendarRow
+          state={state}
+          setState={setState}
+          title={format(moment(date))}
+        />
+        {state === DAY ? <WeekView date={date} setDate={setDate} /> : null}
         {state === MONTH ? <MonthView /> : null}
       </div>
     </Container>
