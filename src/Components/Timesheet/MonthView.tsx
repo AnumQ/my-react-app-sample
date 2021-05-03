@@ -7,57 +7,89 @@ import { formatDateForMonthView } from "./Utils/formatter";
 import MenuItem from "@material-ui/core/MenuItem";
 
 const CLIENTS = ["iSNITT", "iMAL"];
-const PROJECTS = ["iSNITT Portal", "iMAL Kartlegging"];
 
-export const MonthRow = ({ date }: { date: string }) => {
-  const [projects, setProjects] = useState(PROJECTS);
+type Project = {
+  id: number;
+  name: string;
+};
+const PROJECTS = [
+  { id: 1, name: "iSNITT Portal" } as Project,
+  { id: 2, name: "iMAL Kartlegging" } as Project,
+];
+
+export const MonthRow = ({
+  date,
+  projects,
+}: {
+  date: string;
+  projects: Project[];
+}) => {
+  const [selectedProject, setSelectedProject] = useState(projects[0]);
   return (
     <form
       className="MonthRow"
       noValidate
       autoComplete="off"
       style={{
-        background: "clear",
+        background: "#f9f9f9",
+        borderRadius: "12px",
+        padding: "10px 10px 10px 20px",
         display: "flex",
-        justifyContent: "space-between",
-        marginTop: "1rem",
-        marginBottom: "1rem",
+        flexDirection: "column",
+        marginTop: "0.5rem",
+        marginBottom: "0.5rem",
       }}
     >
-      <TextField
-        id="standard-basic"
-        label="Date"
-        defaultValue={date}
-        // disabled={true}
-      />
-      <TextField
-        id="standard-basic"
-        label="Hours"
-        style={{ width: "10%", marginLeft: "0.5rem" }}
-      />
-      <TextField
-        style={{ width: "20%", marginLeft: "0.5rem" }}
-        id="standard-select-currency"
-        select
-        label="Project"
-        value={projects[0]}
-        onChange={() => {
-          //changed project
-          console.log("project changed");
+      <div
+        style={{
+          background: "clear",
+          display: "flex",
+          justifyContent: "space-between",
+          marginTop: "1rem",
+          marginBottom: "1rem",
+          width: "100%",
         }}
-        // helperText="Please select project"
       >
-        {projects.map((option) => (
-          <MenuItem key={option} value={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
-      <TextField
-        id="standard-basic"
-        label="Description"
-        style={{ width: "70%", marginLeft: "0.5rem" }}
-      />
+        <TextField
+          id="standard-basic"
+          label="Date"
+          defaultValue={date}
+          style={{ width: "25%" }}
+        />
+        <TextField
+          id="standard-basic"
+          label="Hours"
+          type="number"
+          style={{ width: "10%", marginLeft: "0.5rem", textAlign: "center" }}
+        />
+        <TextField
+          style={{ width: "30%", marginLeft: "0.5rem" }}
+          id="standard-select-currency"
+          select
+          label="Project"
+          value={selectedProject.name}
+          onChange={(e) => {
+            const p = projects.filter(
+              (project) => project.name === e.target.value
+            )[0];
+
+            setSelectedProject(p);
+          }}
+          // helperText="Please select project"
+        >
+          {projects.map((option) => (
+            <MenuItem key={option.id} value={option.name}>
+              {option.name}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          multiline
+          id="standard-basic"
+          label="Description"
+          style={{ width: "inherit", marginLeft: "0.5rem" }}
+        />
+      </div>
       {/* <TextField id="filled-basic" label="Project" variant="filled" /> */}
       {/* <TextField
             style={{ width: "70%", marginLeft: "0.5rem" }}
@@ -92,14 +124,14 @@ const getDaysInMonth = (year: number, month: number) => {
 
 export const MonthView = ({ date }: { date: Date }) => {
   const [dates, setDates] = useState<string[]>([]);
-
+  const [projects, setProjects] = useState(PROJECTS);
   useEffect(() => {
     const datesArray = getDaysInMonth(date.getFullYear(), date.getMonth() + 1);
     setDates(datesArray);
   }, [date]);
 
   const renderData = (date: string, index: number) => {
-    return <MonthRow key={date} date={date} />;
+    return <MonthRow key={date} date={date} projects={projects} />;
   };
 
   return (

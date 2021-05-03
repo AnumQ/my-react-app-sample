@@ -57,7 +57,7 @@ export const Timesheet = () => {
       </div>
       <div
         style={{
-          width: "800px",
+          width: "1000px",
           margin: "0 auto",
         }}
       >
