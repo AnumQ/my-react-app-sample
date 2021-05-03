@@ -4,22 +4,15 @@ import TextField from "@material-ui/core/TextField";
 import moment from "moment";
 import { log } from "../../consoleHelper";
 import { formatDateForMonthView } from "./Utils/formatter";
+import MenuItem from "@material-ui/core/MenuItem";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& > *": {
-        margin: theme.spacing(1),
-        width: "25ch",
-      },
-    },
-  })
-);
+const CLIENTS = ["iSNITT", "iMAL"];
+const PROJECTS = ["iSNITT Portal", "iMAL Kartlegging"];
 
-export const MonthRow = ({ date, key }: { date: string; key: string }) => {
+export const MonthRow = ({ date }: { date: string }) => {
+  const [projects, setProjects] = useState(PROJECTS);
   return (
     <form
-      key={key}
       className="MonthRow"
       noValidate
       autoComplete="off"
@@ -43,10 +36,23 @@ export const MonthRow = ({ date, key }: { date: string; key: string }) => {
         style={{ width: "10%", marginLeft: "0.5rem" }}
       />
       <TextField
-        id="standard-basic"
+        style={{ width: "20%", marginLeft: "0.5rem" }}
+        id="standard-select-currency"
+        select
         label="Project"
-        style={{ marginLeft: "0.5rem" }}
-      />
+        value={projects[0]}
+        onChange={() => {
+          //changed project
+          console.log("project changed");
+        }}
+        // helperText="Please select project"
+      >
+        {projects.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
+      </TextField>
       <TextField
         id="standard-basic"
         label="Description"
@@ -88,21 +94,17 @@ export const MonthView = ({ date }: { date: Date }) => {
   const [dates, setDates] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log("Should re render");
     const datesArray = getDaysInMonth(date.getFullYear(), date.getMonth() + 1);
-    log(datesArray);
     setDates(datesArray);
   }, [date]);
 
   const renderData = (date: string, index: number) => {
     return <MonthRow key={date} date={date} />;
-    // return <MonthRow key={"MonthRow" + index} date={value} />;
   };
 
   return (
     <div>
       <div>{dates.map(renderData)}</div>
-      {/* <div style={{ marginTop: "1rem" }}>{dates.map(renderData)}</div> */}
     </div>
   );
 };

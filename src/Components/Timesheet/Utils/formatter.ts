@@ -23,11 +23,13 @@ export const addDays = (currentDate: Date, days: number) => {
 };
 
 export const prevMonth = (currentDate: Date) => {
-  log(currentDate);
   const date = new Date(currentDate);
-  log(date);
   date.setMonth(date.getMonth() - 1);
-  log(date);
-  // date.setDate(date.getDate() + days);
+  return date;
+};
+
+export const nextMonth = (currentDate: Date) => {
+  const date = new Date(currentDate);
+  date.setMonth(date.getMonth() + 1);
   return date;
 };

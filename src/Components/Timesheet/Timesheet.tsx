@@ -9,6 +9,7 @@ import {
   addDays,
   format,
   formatToMonthYear,
+  nextMonth,
   prevMonth,
 } from "./Utils/formatter";
 import { log } from "../../consoleHelper";
@@ -28,21 +29,21 @@ export const Timesheet = () => {
   const [date, setDate] = useState(moment().toDate());
 
   useEffect(() => {
-    console.log("CURREENT DAY CHANGED");
-    log(date);
+    // log(date);
   }, [date]);
 
   const handleLeft = () => {
-    log("handleLeft");
     if (state === MONTH) {
-      // change date to previous month
       const newDate = prevMonth(date);
       setDate(newDate);
     }
   };
 
   const handleRight = () => {
-    log("handleRight");
+    if (state === MONTH) {
+      const newDate = nextMonth(date);
+      setDate(newDate);
+    }
   };
 
   const handleCalendar = () => {
