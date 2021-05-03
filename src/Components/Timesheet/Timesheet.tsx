@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaHourglassHalf } from "react-icons/fa";
+import { FaHourglassHalf, FaPlusCircle, FaPlusSquare } from "react-icons/fa";
 import styled from "styled-components";
 import { MonthView } from "./MonthView";
 import { TitleCalendarRow } from "./TitleCalendarRow";
@@ -13,6 +13,7 @@ import {
   prevMonth,
 } from "./Utils/formatter";
 import { log } from "../../consoleHelper";
+import AddEntry from "../AddEntry";
 
 export const Container = styled.div`
   display: "flex";
@@ -27,7 +28,6 @@ export const DAY = 1;
 export const Timesheet = () => {
   const [state, setState] = useState(DAY);
   const [date, setDate] = useState(moment().toDate());
-
   useEffect(() => {
     // log(date);
   }, [date]);
@@ -67,27 +67,47 @@ export const Timesheet = () => {
       </div>
       <div
         style={{
-          width: "1000px",
+          backgroundColor: "clear",
+          display: "flex",
+          justifyContent: "center",
+          width: "1080px",
           margin: "0 auto",
         }}
       >
-        <TitleCalendarRow
-          title={
-            state === MONTH ? formatToMonthYear(date) : format(moment(date))
-          }
-          state={state}
-          setState={setState}
-          handleLeft={handleLeft}
-          handleRight={handleRight}
-          handleDay={() => {
-            setState(DAY);
+        <div
+          style={{
+            backgroundColor: "clear",
+            marginTop: "3.1rem",
           }}
-          handleMonth={() => {
-            setState(MONTH);
+        >
+          <AddEntry />
+        </div>
+
+        <div
+          style={{
+            width: "1000px",
+            margin: "0 auto",
           }}
-        />
-        {state === DAY ? <WeekView date={date} setDate={setDate} /> : null}
-        {state === MONTH ? <MonthView date={date} /> : null}
+        >
+          <TitleCalendarRow
+            title={
+              state === MONTH ? formatToMonthYear(date) : format(moment(date))
+            }
+            state={state}
+            setState={setState}
+            handleLeft={handleLeft}
+            handleRight={handleRight}
+            handleDay={() => {
+              setState(DAY);
+            }}
+            handleMonth={() => {
+              setState(MONTH);
+            }}
+          />
+
+          {state === DAY ? <WeekView date={date} setDate={setDate} /> : null}
+          {state === MONTH ? <MonthView date={date} /> : null}
+        </div>
       </div>
     </Container>
   );

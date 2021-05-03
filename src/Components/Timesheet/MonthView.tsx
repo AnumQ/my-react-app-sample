@@ -6,15 +6,19 @@ import { log } from "../../consoleHelper";
 import { formatDateForMonthView } from "./Utils/formatter";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const CLIENTS = ["iSNITT", "iMAL"];
+export const CLIENTS = [
+  { id: 1, name: "iSNITT" } as Entity,
+  { id: 2, name: "iMAL" } as Entity,
+];
 
-type Project = {
+type Entity = {
   id: number;
   name: string;
 };
-const PROJECTS = [
-  { id: 1, name: "iSNITT Portal" } as Project,
-  { id: 2, name: "iMAL Kartlegging" } as Project,
+
+export const PROJECTS = [
+  { id: 1, name: "iSNITT Portal" } as Entity,
+  { id: 2, name: "iMAL Kartlegging" } as Entity,
 ];
 
 export const MonthRow = ({
@@ -22,7 +26,7 @@ export const MonthRow = ({
   projects,
 }: {
   date: string;
-  projects: Project[];
+  projects: Entity[];
 }) => {
   const [selectedProject, setSelectedProject] = useState(projects[0]);
   return (
@@ -89,6 +93,14 @@ export const MonthRow = ({
           label="Description"
           style={{ width: "inherit", marginLeft: "0.5rem" }}
         />
+        {/* Outlined */}
+        {/* <TextField
+          multiline
+          id="outlined-multiline-static"
+          label="Description"
+          variant="outlined"
+          style={{ width: "inherit", marginLeft: "0.5rem" }}
+        /> */}
       </div>
       {/* <TextField id="filled-basic" label="Project" variant="filled" /> */}
       {/* <TextField
