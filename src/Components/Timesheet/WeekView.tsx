@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { buttonStyle } from "./TitleCalendarRow";
 import { Button } from "@material-ui/core";
@@ -46,12 +46,14 @@ const DayItem = ({
 };
 
 export const WeekView = ({ date, setDate }: { date: Date; setDate: any }) => {
-  const weekOfDay = moment(date).isoWeekday();
+  const [currentDay, setCurrentDay] = useState(moment(date).isoWeekday() - 1);
 
-  const [currentDay, setCurrentDay] = useState(weekOfDay - 1);
-
-  const DisplayDay = ({ day }: { day: any }) => {
-    return <div>Day {day}</div>;
+  useEffect(() => {
+    const weekOfDay = moment(date).isoWeekday();
+    setCurrentDay(weekOfDay - 1);
+  }, [date]);
+  const DisplayDay = ({ date, day }: { date: Date; day: any }) => {
+    return <div>Day {date.toLocaleDateString()}</div>;
   };
   return (
     <>
@@ -68,15 +70,7 @@ export const WeekView = ({ date, setDate }: { date: Date; setDate: any }) => {
             selected={currentDay == day.day}
             name={day.title}
             onClick={() => {
-              console.log("currentDay: " + currentDay);
-              console.log("index: " + index);
-              console.log("day: " + day.day);
-              log(date);
-
-              log("next date");
-
               setCurrentDay(day.day);
-
               if (currentDay !== day.day) {
                 const daysToChange = index - currentDay;
                 // log("days to add " + daysToAdd);
@@ -90,7 +84,7 @@ export const WeekView = ({ date, setDate }: { date: Date; setDate: any }) => {
       <div
         style={{ background: "#f6f6f6", height: "500px", paddingTop: "1rem" }}
       >
-        <DisplayDay day={currentDay} />
+        <DisplayDay day={currentDay} date={date} />
       </div>
     </>
   );

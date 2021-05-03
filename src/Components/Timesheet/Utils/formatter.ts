@@ -3,7 +3,7 @@ import moment from "moment";
 import { log } from "../../../consoleHelper";
 
 export const format = (date: moment.Moment) => {
-  return date.format("dddd") + ", " + date.format("DD MMM");
+  return date.format("dddd") + ", " + date.format("DD MMM YYYY");
 };
 
 export const formatDateForMonthView = (date: Date) => {

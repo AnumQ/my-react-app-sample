@@ -127,7 +127,7 @@ export const TitleCalendarRow = ({
             <Button
               style={buttonStyle}
               onClick={() => {
-                console.log("left");
+                console.log("calendar");
               }}
             >
               <FaCalendarAlt size="16" />

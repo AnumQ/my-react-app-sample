@@ -6,7 +6,7 @@ import { TitleCalendarRow } from "./TitleCalendarRow";
 import { WeekView } from "./WeekView";
 import moment from "moment";
 import {
-  addDays,
+  addDays as addDaysToDate,
   format,
   formatToMonthYear,
   nextMonth,
@@ -25,7 +25,7 @@ export const MONTH = 0;
 export const DAY = 1;
 
 export const Timesheet = () => {
-  const [state, setState] = useState(MONTH);
+  const [state, setState] = useState(DAY);
   const [date, setDate] = useState(moment().toDate());
 
   useEffect(() => {
@@ -37,11 +37,21 @@ export const Timesheet = () => {
       const newDate = prevMonth(date);
       setDate(newDate);
     }
+
+    if (state == DAY) {
+      const newDate = addDaysToDate(date, -1);
+      setDate(newDate);
+    }
   };
 
   const handleRight = () => {
     if (state === MONTH) {
       const newDate = nextMonth(date);
+      setDate(newDate);
+    }
+
+    if (state == DAY) {
+      const newDate = addDaysToDate(date, 1);
       setDate(newDate);
     }
   };
