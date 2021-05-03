@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-  FaClock,
-  FaHourglass,
-  FaHourglassHalf,
-} from "react-icons/fa";
-import { Button } from "@material-ui/core";
+import { FaHourglassHalf } from "react-icons/fa";
 import styled from "styled-components";
 import { FirstRow } from "./FirstRow";
 

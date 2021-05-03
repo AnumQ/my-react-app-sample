@@ -1,6 +1,11 @@
 import React from "react";
 
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import {
+  FaCalendar,
+  FaCalendarAlt,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
 import { Button } from "@material-ui/core";
 
 import styled from "styled-components";
@@ -9,12 +14,12 @@ const ButtonContainer = styled.div`
   display: flex;
   background: #efefef;
   margin: 2px;
-  width: 2.2rem;
+  width: 2.5rem;
+  height: 2rem;
   justify-content: center;
   align-items: center;
   border-radius: 2px;
 
-  height: 1.8rem;
   :hover {
     background: lightgray;
   }
@@ -41,7 +46,10 @@ export const FirstRow = () => {
     <div
       style={{
         display: "flex",
-        justifyContent: "center",
+        justifyContent: "space-between",
+        background: "clear",
+        width: "800px",
+        margin: "0 auto",
       }}
     >
       <div
@@ -91,8 +99,18 @@ export const FirstRow = () => {
             marginRight: "1rem",
           }}
         >
-          <ItemContainer>Calendar</ItemContainer>
-          <ItemContainer>
+          <ButtonContainer>
+            <Button
+              style={buttonStyle}
+              onClick={() => {
+                console.log("left");
+              }}
+            >
+              <FaCalendarAlt size="16" />
+            </Button>
+          </ButtonContainer>
+          {/* DAY and WEEK */}
+          {/* <ItemContainer>
             <ButtonContainer style={{ width: "4rem" }}>
               <Button
                 style={buttonStyle}
@@ -117,7 +135,7 @@ export const FirstRow = () => {
                 </div>
               </Button>
             </ButtonContainer>
-          </ItemContainer>
+          </ItemContainer> */}
         </div>
       </div>
     </div>
