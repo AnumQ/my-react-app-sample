@@ -18,7 +18,7 @@ export const ButtonContainerNoShadowBox = styled.div<ButtonProps>`
   border-top: 1px solid #e0e0e0;
   border-right: 1px solid #e0e0e0;
   border-left: ${({ first }) => (first ? "1px" : "0px")} solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  // border-bottom: 1px solid #e0e0e0;
   box-shadow: ${({ selected }) => (selected ? selectedShadow : null)};
 
   :hover {
