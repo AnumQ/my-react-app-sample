@@ -62,9 +62,11 @@ export const CustomButton = ({
 };
 
 export const TitleCalendarRow = ({
+  title,
   state,
   setState,
 }: {
+  title: string;
   state: number;
   setState: any;
 }) => {
@@ -107,7 +109,7 @@ export const TitleCalendarRow = ({
         </ButtonContainerWithShadowBox>
         <ItemContainer>
           <text style={{ marginLeft: "0.3rem", fontWeight: "bold" }}>
-            Today: Monday, 03 May{" "}
+            {title}
           </text>
         </ItemContainer>
       </div>

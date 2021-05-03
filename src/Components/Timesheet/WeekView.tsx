@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { buttonStyle } from "./TitleCalendarRow";
 import { Button } from "@material-ui/core";
 import { ButtonContainerNoShadowBox } from "./UI/ButtonsNoShadowbox";
+import moment, { Moment } from "moment";
+import { format } from "./Utils/formatter";
 
 const M = 0;
 const T = 1;
@@ -42,9 +44,16 @@ const DayItem = ({
   );
 };
 
-export const WeekView = () => {
-  // switch between weedays
-  const [currentDay, setCurrentDay] = useState(M);
+export const WeekView = ({
+  date,
+  handleSetDate,
+}: {
+  date: Moment;
+  handleSetDate: (data: any) => void;
+}) => {
+  const weekOfDay = date.isoWeekday();
+
+  const [currentDay, setCurrentDay] = useState(weekOfDay - 1);
 
   const DisplayDay = ({ day }: { day: any }) => {
     return <div>Day {day}</div>;
@@ -64,7 +73,31 @@ export const WeekView = () => {
             selected={currentDay == day.day}
             name={day.title}
             onClick={() => {
+              console.log("currentDay: " + currentDay);
+              console.log("index: " + index);
+              console.log("day: " + day.day);
               setCurrentDay(day.day);
+
+              if (currentDay !== day.day) {
+                // set new date here
+
+                if (index > currentDay) {
+                  // add to day
+                  const nextDate = date.add(index, "day");
+                  console.log("nextDate");
+                  handleSetDate(nextDate);
+                }
+
+                if (index < currentDay) {
+                  const backDays = currentDay - index;
+                  console.log(backDays);
+                  const nextDate = date.subtract(1, "day");
+                  console.log("back date");
+                  console.log(format(nextDate));
+
+                  handleSetDate(nextDate);
+                }
+              }
             }}
           />
         ))}
