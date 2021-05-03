@@ -19,12 +19,11 @@ export const MONTH = 0;
 export const DAY = 1;
 
 export const Timesheet = () => {
-  const [state, setState] = useState(DAY);
+  const [state, setState] = useState(MONTH);
   const [date, setDate] = useState(moment().toDate());
 
   useEffect(() => {
     console.log("CURREENT DAY CHANGED");
-
     log(date);
   }, [date]);
 
@@ -42,7 +41,7 @@ export const Timesheet = () => {
         <TitleCalendarRow
           state={state}
           setState={setState}
-          title={format(moment(date))}
+          title={state === MONTH ? "" : format(moment(date))}
         />
         {state === DAY ? <WeekView date={date} setDate={setDate} /> : null}
         {state === MONTH ? <MonthView /> : null}
