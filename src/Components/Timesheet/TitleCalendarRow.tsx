@@ -1,24 +1,33 @@
 import React from "react";
 
-import {
-  FaCalendar,
-  FaCalendarAlt,
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import { FaCalendarAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Button } from "@material-ui/core";
 
 import styled from "styled-components";
 
-const ButtonContainer = styled.div`
+const shadowColor = "#adadad";
+const selectedShadow = "rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset";
+// const selectedShadow =
+// "rgba(50, 50, 93, 0.05) 0px 30px 30px -20px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -1px inset";
+
+const regularShadow =
+  "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px";
+
+type ButtonProps = {
+  selected?: boolean;
+  width?: number;
+};
+
+export const ButtonContainer = styled.div<ButtonProps>`
   display: flex;
-  background: #efefef;
-  margin: 2px;
-  width: 2.5rem;
-  height: 2rem;
+  background: ${({ selected }) => (selected ? "#dadada" : "#efefef")};
+  // margin: 2px;
+  width: ${({ width }) => (width ? width.toString() + "rem" : "100%")};
+
+  height: ${({ selected }) => (selected ? "2.1rem" : "2rem")};
   justify-content: center;
   align-items: center;
-  border-radius: 2px;
+  box-shadow: ${({ selected }) => (selected ? selectedShadow : regularShadow)};
 
   :hover {
     background: lightgray;
@@ -30,7 +39,7 @@ const ItemContainer = styled.div`
   align-items: center;
 `;
 
-const buttonStyle = {
+export const buttonStyle = {
   minWidth: "inherit",
   color: "#484848",
   width: "inherit",
@@ -41,14 +50,13 @@ const textStyle = {
   fontSize: "14px",
 };
 
-export const FirstRow = () => {
+export const TitleCalendarRow = () => {
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "space-between",
         background: "clear",
-        width: "800px",
         margin: "0 auto",
       }}
     >
@@ -58,11 +66,9 @@ export const FirstRow = () => {
           display: "flex",
           justifyContent: "center",
           background: "clear",
-          marginLeft: "1rem",
-          marginRight: "1rem",
         }}
       >
-        <ButtonContainer>
+        <ButtonContainer width={2.5}>
           <Button
             style={buttonStyle}
             onClick={() => {
@@ -72,7 +78,7 @@ export const FirstRow = () => {
             <FaChevronLeft />
           </Button>
         </ButtonContainer>
-        <ButtonContainer>
+        <ButtonContainer width={2.5}>
           <Button
             style={buttonStyle}
             onClick={() => {
@@ -95,8 +101,6 @@ export const FirstRow = () => {
             justifyContent: "center",
             alignItems: "center",
             background: "clear",
-            marginLeft: "1rem",
-            marginRight: "1rem",
           }}
         >
           <ButtonContainer>
