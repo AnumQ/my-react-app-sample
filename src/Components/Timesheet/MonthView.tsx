@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import moment from "moment";
@@ -16,9 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const MonthRow = ({ date }: { date: string }) => {
+export const MonthRow = ({ date, key }: { date: string; key: string }) => {
   return (
     <form
+      key={key}
       className="MonthRow"
       noValidate
       autoComplete="off"
@@ -83,18 +84,25 @@ const getDaysInMonth = (year: number, month: number) => {
   return result;
 };
 
-export const MonthView = () => {
-  const date = moment(); // get current month
-  const dates = getDaysInMonth(2021, date.month() + 1);
+export const MonthView = ({ date }: { date: Date }) => {
+  const [dates, setDates] = useState<string[]>([]);
+
+  useEffect(() => {
+    console.log("Should re render");
+    const datesArray = getDaysInMonth(date.getFullYear(), date.getMonth() + 1);
+    log(datesArray);
+    setDates(datesArray);
+  }, [date]);
+
+  const renderData = (date: string, index: number) => {
+    return <MonthRow key={date} date={date} />;
+    // return <MonthRow key={"MonthRow" + index} date={value} />;
+  };
+
   return (
     <div>
-      <div style={{ marginTop: "1rem" }}>
-        {/* row */}
-
-        {dates.map((date, index) => (
-          <MonthRow key={"MonthRow" + index} date={date} />
-        ))}
-      </div>
+      <div>{dates.map(renderData)}</div>
+      {/* <div style={{ marginTop: "1rem" }}>{dates.map(renderData)}</div> */}
     </div>
   );
 };

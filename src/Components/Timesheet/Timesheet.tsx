@@ -5,7 +5,12 @@ import { MonthView } from "./MonthView";
 import { TitleCalendarRow } from "./TitleCalendarRow";
 import { WeekView } from "./WeekView";
 import moment from "moment";
-import { format } from "./Utils/formatter";
+import {
+  addDays,
+  format,
+  formatToMonthYear,
+  prevMonth,
+} from "./Utils/formatter";
 import { log } from "../../consoleHelper";
 
 export const Container = styled.div`
@@ -27,6 +32,23 @@ export const Timesheet = () => {
     log(date);
   }, [date]);
 
+  const handleLeft = () => {
+    log("handleLeft");
+    if (state === MONTH) {
+      // change date to previous month
+      const newDate = prevMonth(date);
+      setDate(newDate);
+    }
+  };
+
+  const handleRight = () => {
+    log("handleRight");
+  };
+
+  const handleCalendar = () => {
+    log("handleCalendar");
+  };
+
   return (
     <Container>
       <div style={{ marginTop: "2rem" }}>
@@ -39,12 +61,22 @@ export const Timesheet = () => {
         }}
       >
         <TitleCalendarRow
+          title={
+            state === MONTH ? formatToMonthYear(date) : format(moment(date))
+          }
           state={state}
           setState={setState}
-          title={state === MONTH ? "" : format(moment(date))}
+          handleLeft={handleLeft}
+          handleRight={handleRight}
+          handleDay={() => {
+            setState(DAY);
+          }}
+          handleMonth={() => {
+            setState(MONTH);
+          }}
         />
         {state === DAY ? <WeekView date={date} setDate={setDate} /> : null}
-        {state === MONTH ? <MonthView /> : null}
+        {state === MONTH ? <MonthView date={date} /> : null}
       </div>
     </Container>
   );

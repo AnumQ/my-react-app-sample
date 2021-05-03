@@ -4,7 +4,7 @@ import { buttonStyle } from "./TitleCalendarRow";
 import { Button } from "@material-ui/core";
 import { ButtonContainerNoShadowBox } from "./UI/ButtonsNoShadowbox";
 import moment, { Moment } from "moment";
-import { format } from "./Utils/formatter";
+import { addDays, format } from "./Utils/formatter";
 import { log } from "../../consoleHelper";
 
 const M = 0;
@@ -95,9 +95,3 @@ export const WeekView = ({ date, setDate }: { date: Date; setDate: any }) => {
     </>
   );
 };
-
-function addDays(currentDate: Date, days: number) {
-  const date = new Date(currentDate);
-  date.setDate(date.getDate() + days);
-  return date;
-}

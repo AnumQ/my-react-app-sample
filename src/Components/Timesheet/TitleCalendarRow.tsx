@@ -65,10 +65,18 @@ export const TitleCalendarRow = ({
   title,
   state,
   setState,
+  handleLeft,
+  handleRight,
+  handleDay,
+  handleMonth,
 }: {
   title: string;
   state: number;
   setState: any;
+  handleLeft: any;
+  handleRight: any;
+  handleDay: any;
+  handleMonth: any;
 }) => {
   return (
     <div
@@ -88,29 +96,22 @@ export const TitleCalendarRow = ({
         }}
       >
         <ButtonContainerWithShadowBox width={2.5}>
-          <Button
-            style={buttonStyle}
-            onClick={() => {
-              console.log("left");
-            }}
-          >
+          <Button style={buttonStyle} onClick={handleLeft}>
             <FaChevronLeft />
           </Button>
         </ButtonContainerWithShadowBox>
         <ButtonContainerWithShadowBox width={2.5}>
-          <Button
-            style={buttonStyle}
-            onClick={() => {
-              console.log("right");
-            }}
-          >
+          <Button style={buttonStyle} onClick={handleRight}>
             <FaChevronRight />
           </Button>
         </ButtonContainerWithShadowBox>
+      </div>
+      <div
+        id="center"
+        style={{ background: "clear", display: "flex", alignItems: "center" }}
+      >
         <ItemContainer>
-          <text style={{ marginLeft: "0.3rem", fontWeight: "bold" }}>
-            {title}
-          </text>
+          <text style={{ fontWeight: "bold" }}>{title}</text>
         </ItemContainer>
       </div>
       <div id="right">
@@ -138,16 +139,12 @@ export const TitleCalendarRow = ({
               first={true}
               selected={state == DAY}
               title="Day"
-              onClick={() => {
-                setState(DAY);
-              }}
+              onClick={handleDay}
             />
             <CustomButton
               selected={state == MONTH}
               title="Month"
-              onClick={() => {
-                setState(MONTH);
-              }}
+              onClick={handleMonth}
             />
             {/* <ButtonContainer style={{ width: "4rem", marginLeft: "0.5rem" }}>
               <Button
