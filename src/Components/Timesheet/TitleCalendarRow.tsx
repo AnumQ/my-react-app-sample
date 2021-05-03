@@ -1,38 +1,13 @@
 import React from "react";
-
 import { FaCalendarAlt, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Button } from "@material-ui/core";
-
 import styled from "styled-components";
-
-const shadowColor = "#adadad";
-const selectedShadow = "rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset";
-// const selectedShadow =
-// "rgba(50, 50, 93, 0.05) 0px 30px 30px -20px inset, rgba(0, 0, 0, 0.2) 0px 18px 36px -1px inset";
-
-const regularShadow =
-  "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px";
-
-type ButtonProps = {
-  selected?: boolean;
-  width?: number;
-};
-
-export const ButtonContainer = styled.div<ButtonProps>`
-  display: flex;
-  background: ${({ selected }) => (selected ? "#dadada" : "#efefef")};
-  // margin: 2px;
-  width: ${({ width }) => (width ? width.toString() + "rem" : "100%")};
-
-  height: ${({ selected }) => (selected ? "2.1rem" : "2rem")};
-  justify-content: center;
-  align-items: center;
-  box-shadow: ${({ selected }) => (selected ? selectedShadow : regularShadow)};
-
-  :hover {
-    background: lightgray;
-  }
-`;
+import { DAY, MONTH } from "./Timesheet";
+import {
+  ButtonContainerWithShadowBox,
+  regularShadow,
+} from "./UI/ButtonWithShadowbox";
+import { ButtonContainerNoShadowBox } from "./UI/ButtonsNoShadowbox";
 
 const ItemContainer = styled.div`
   display: flex;
@@ -50,7 +25,49 @@ const textStyle = {
   fontSize: "14px",
 };
 
-export const TitleCalendarRow = () => {
+export const CustomButton = ({
+  first,
+  title,
+  selected,
+  onClick,
+}: {
+  first?: boolean;
+  title: string;
+  selected: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <ButtonContainerNoShadowBox
+      first={first}
+      selected={selected}
+      style={{
+        width: "4rem",
+        marginLeft: "0rem",
+        boxShadow: regularShadow,
+        height: "2rem",
+      }}
+    >
+      <Button style={buttonStyle} onClick={onClick}>
+        <div
+          style={{
+            backgroundColor: "clear",
+            marginTop: "1px",
+          }}
+        >
+          <text style={textStyle}>{title}</text>
+        </div>
+      </Button>
+    </ButtonContainerNoShadowBox>
+  );
+};
+
+export const TitleCalendarRow = ({
+  state,
+  setState,
+}: {
+  state: number;
+  setState: any;
+}) => {
   return (
     <div
       style={{
@@ -68,7 +85,7 @@ export const TitleCalendarRow = () => {
           background: "clear",
         }}
       >
-        <ButtonContainer width={2.5}>
+        <ButtonContainerWithShadowBox width={2.5}>
           <Button
             style={buttonStyle}
             onClick={() => {
@@ -77,8 +94,8 @@ export const TitleCalendarRow = () => {
           >
             <FaChevronLeft />
           </Button>
-        </ButtonContainer>
-        <ButtonContainer width={2.5}>
+        </ButtonContainerWithShadowBox>
+        <ButtonContainerWithShadowBox width={2.5}>
           <Button
             style={buttonStyle}
             onClick={() => {
@@ -87,7 +104,7 @@ export const TitleCalendarRow = () => {
           >
             <FaChevronRight />
           </Button>
-        </ButtonContainer>
+        </ButtonContainerWithShadowBox>
         <ItemContainer>
           <text style={{ marginLeft: "0.3rem", fontWeight: "bold" }}>
             Today: Monday, 03 May{" "}
@@ -103,7 +120,7 @@ export const TitleCalendarRow = () => {
             background: "clear",
           }}
         >
-          <ButtonContainer>
+          <ButtonContainerWithShadowBox style={{ marginRight: "1rem" }}>
             <Button
               style={buttonStyle}
               onClick={() => {
@@ -112,34 +129,42 @@ export const TitleCalendarRow = () => {
             >
               <FaCalendarAlt size="16" />
             </Button>
-          </ButtonContainer>
+          </ButtonContainerWithShadowBox>
           {/* DAY and WEEK */}
-          {/* <ItemContainer>
-            <ButtonContainer style={{ width: "4rem" }}>
+          <ItemContainer>
+            <CustomButton
+              first={true}
+              selected={state == DAY}
+              title="Day"
+              onClick={() => {
+                setState(DAY);
+              }}
+            />
+            <CustomButton
+              selected={state == MONTH}
+              title="Month"
+              onClick={() => {
+                setState(MONTH);
+              }}
+            />
+            {/* <ButtonContainer style={{ width: "4rem", marginLeft: "0.5rem" }}>
               <Button
                 style={buttonStyle}
                 onClick={() => {
-                  console.log("left");
+                  setState(MONTH);
                 }}
               >
-                <div style={{ backgroundColor: "clear", marginTop: "1px" }}>
-                  <text style={textStyle}>Day</text>
+                <div
+                  style={{
+                    backgroundColor: "clear",
+                    marginTop: "1px",
+                  }}
+                >
+                  <text style={textStyle}>Month</text>
                 </div>
               </Button>
-            </ButtonContainer>
-            <ButtonContainer style={{ width: "4rem" }}>
-              <Button
-                style={buttonStyle}
-                onClick={() => {
-                  console.log("right");
-                }}
-              >
-                <div style={{ backgroundColor: "clear", marginTop: "1px" }}>
-                  <text style={textStyle}>Week</text>
-                </div>
-              </Button>
-            </ButtonContainer>
-          </ItemContainer> */}
+            </ButtonContainer> */}
+          </ItemContainer>
         </div>
       </div>
     </div>

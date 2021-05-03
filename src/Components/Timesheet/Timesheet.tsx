@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaHourglassHalf } from "react-icons/fa";
 import styled from "styled-components";
+import { MonthView } from "./MonthView";
 import { TitleCalendarRow } from "./TitleCalendarRow";
-import { WeekDays } from "./Weekdays";
+import { WeekView } from "./WeekView";
 
 export const Container = styled.div`
   display: "flex";
@@ -11,7 +12,13 @@ export const Container = styled.div`
   justify-content: "center";
 `;
 
+export const MONTH = 0;
+export const DAY = 1;
+
 export const Timesheet = () => {
+  // switch betwen month or day
+  const [state, setState] = useState(DAY);
+
   return (
     <Container>
       <div style={{ marginTop: "2rem" }}>
@@ -23,8 +30,9 @@ export const Timesheet = () => {
           margin: "0 auto",
         }}
       >
-        <TitleCalendarRow />
-        <WeekDays />
+        <TitleCalendarRow state={state} setState={setState} />
+        {state === DAY ? <WeekView /> : null}
+        {state === MONTH ? <MonthView /> : null}
       </div>
     </Container>
   );
