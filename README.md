@@ -2,8 +2,16 @@
 
 This project was boaotstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Clone the repo
+## Project Setup
 
-## Rename my-react-app-sample with <your project name>
+### 1. Clone the repo
 
-## Connect Firebase backend
+### 2. Rename my-react-app-sample with <your project name>
+
+### 3. Connect Firebase backend
+
+## Development
+
+### npm install
+
+### npm start
