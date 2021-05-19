@@ -1,8 +1,9 @@
 {
-  "name": "timesheetapp",
+  "name": "my-react-app-sample",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -49,7 +50,6 @@
   },
   "devDependencies": {
     "@material-ui/core": "^4.11.4",
-    "@react-pdf/renderer": "^2.0.8",
     "@types/styled-components": "^5.1.9",
     "@types/webfontloader": "^1.6.32",
     "eslint": "^7.25.0",

@@ -1,6 +1,6 @@
 {
-  "short_name": "Timesheet",
-  "name": "Timesheet from Anum.io",
+  "short_name": "my-react-app-sample",
+  "name": "my-react-app-sample from Anum.io",
   "icons": [
     {
       "src": "favicon.ico",
